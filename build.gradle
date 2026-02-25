@@ -1,0 +1,84 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'com.automation'
+version = '1.0'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    // Selenium
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.18.1'
+
+    // WebDriver Manager
+    testImplementation 'io.github.bonigarcia:webdrivermanager:6.3.3'
+
+    // TestNG
+    testImplementation 'org.testng:testng:7.8.0'
+
+    // Cucumber
+    testImplementation 'io.cucumber:cucumber-java:7.33.0'
+    testImplementation 'io.cucumber:cucumber-testng:7.33.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.14.1'
+    testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.15.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+
+    // Dependencias de ejecución (test engine) – AÑADE ESTAS
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+
+    // Logging
+    testImplementation 'org.slf4j:slf4j-api:2.0.13'
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.5.6'
+
+}
+
+test {
+    //useTestNG()
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true 
+    }
+
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = []  // No compilar nada de main
+        }
+        resources {
+            srcDirs = []
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+        resources {
+            srcDirs = ['src/test/resources']
+        }
+    }
+}
+
+tasks.named('test') {
+    systemProperty "cucumber.options", System.getProperty ("cucumber.options")
+    systemProperties System.getProperties()
+}

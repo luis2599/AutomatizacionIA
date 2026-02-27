@@ -189,6 +189,14 @@ public class basicSteps {
         return doble;
     }
 
+    //Metodo para convertir un String en un valor double
+    public double convertirWebElementADouble(WebElement locator){
+        String texto = obtenerTextoWebElement(locator);
+        String conversion = texto.replaceAll("[^\\d.]", "");
+        double valor = Double.parseDouble(conversion.trim());
+        return valor;
+    }
+
     // metodo para tomar un objeto de la pagina y transformala en numero, con
     // impresion del numero obtenido
     public Integer obtenerNumero(By locator) {

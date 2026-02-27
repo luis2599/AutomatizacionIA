@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Cucumber" time="6.693" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-02-27T18:19:37.389435800Z">
-<testcase classname="Proceso de compras de productos en el catalogo" name="Seleccion de productos segun criterio" time="6.498">
+<testsuite name="Cucumber" time="6.711" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-02-27T23:20:42.159025100Z">
+<testcase classname="Proceso de compras de productos en el catalogo" name="Seleccion de productos segun criterio" time="6.482">
 <system-out><![CDATA[
 Given El usuario abre el navegador y navega al sitio web....................passed
 And El usuario ha iniciado sesion...........................................passed

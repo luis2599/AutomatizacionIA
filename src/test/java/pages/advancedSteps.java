@@ -2,6 +2,8 @@ package pages;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -29,11 +31,12 @@ public class advancedSteps extends basicSteps {
 
     // Elementos inventarios de productos
     private List<WebElement> productContainers = new ArrayList<>();
-    private List<WebElement> productName = new ArrayList<>();
+    private List<String> productName = new ArrayList<>();
     private List<WebElement> productPrices = new ArrayList<>();
     private List<WebElement> productButtonCart = new ArrayList<>();
     private List<WebElement> productNameElements = new ArrayList<>();
     private List<WebElement> productPriceElements = new ArrayList<>();
+    private List<Double> productPriceDoubleElements = new ArrayList<>();
     private List<WebElement> productAddCartElements = new ArrayList<>();
     
     // Elementos carrito de compras
@@ -60,16 +63,21 @@ public class advancedSteps extends basicSteps {
                 productNameElements = products.findElements(locatorName);
                 productPriceElements = products.findElements(locatorPrice);
                 productAddCartElements = products.findElements(locatorButton);
+
                 // Se agrega valor al contador de productos en el inventario
-                addedCount += productNameElements.size();
+                addedCount += productPriceElements.size();
+
                 // Se agregan los valores a las listas (Nombre y Precio)
-                productName.addAll(productNameElements);
-                productPrices.addAll(productPriceElements);
+                productName.addAll(productNameElements.stream().map(element -> element.getText()).collect(Collectors.toList()));
                 productButtonCart.addAll(productAddCartElements);
-                log.info("Se agregaron " + addedCount + " elementos.");
+                for (WebElement element : productPriceElements) {
+                    double valor = convertirWebElementADouble(element);
+                    productPriceDoubleElements.add(valor);
+                }
+
+                log.info("Se agregaron {} elementos.", addedCount);
             } catch (Exception e) {
-                log.error("Error en elemento: ", e.getMessage());
-                e.printStackTrace();
+                log.error("Error en elemento: ", e.getMessage(), e);
             }
         }
 
@@ -80,28 +88,25 @@ public class advancedSteps extends basicSteps {
 
         // Este for imprime los resultados que se agregaron anteriormente
         for (int j = 0; j < addedCount; j++) {
-            log.info("Nombre producto: " + obtenerTextoWebElement(productName.get(j)));
-            log.info("Precio producto(String): " + obtenerTextoWebElement(productPrices.get(j)));
-            String valPro = obtenerTextoWebElement(productPrices.get(j));
-            log.info("Precio producto(double): " + convertirStringADouble(valPro));
+            log.info("Nombre producto: {}, Precio producto: {}", productName.get(j), productPriceDoubleElements.get(j));
         }
     }
 
     // Este método compara todos los valores actualizados con anterioridad y guarda el de mayor precio
     public void higherPrice() {
-
+        
         indMaxPro = -1;
         // Este for realiza el bucle que valida cada valor
         for (int i = 0; i < addedCount; i++) {
-            double number = convertirStringADouble(obtenerTextoWebElement(productPrices.get(i)));
+            double number = productPriceDoubleElements.get(i);
             if (number > valMaxPro) {
                 valMaxPro = number;
                 indMaxPro = i;
             }
 
         }
-        log.info("Este es el precio mayor: " + valMaxPro + " Esta ubicado en el lugar: " + indMaxPro);
-        stringNameProduct = obtenerTextoWebElement(productName.get(indMaxPro));
+        log.info("Este es el precio mayor: {} Esta ubicado en el lugar: {}", valMaxPro, indMaxPro);
+        stringNameProduct = productName.get(indMaxPro);
 
     }
 
@@ -124,15 +129,16 @@ public class advancedSteps extends basicSteps {
         // Este for recorre todos los elementos de la lista
         for (WebElement products : cartContainers) {
             try {
-                WebElement name_cart_webelement = products.findElement(locatorNameCart);
+                WebElement cartNameWebElement = products.findElement(locatorNameCart);
                 cartNameElements = driver.findElements(locatorNameCart);
                 addedCountCart += cartNameElements.size();
+
                 // Se agregan los valores a las listas (Nombre y Precio)
                 cartNameProduct.addAll(cartNameElements);
-                cartTextName.add(name_cart_webelement.getText());
+                
+                cartTextName.add(cartNameWebElement.getText());
             } catch (Exception e) {
-                log.error("Error en elemento: ", e.getMessage());
-                e.printStackTrace();
+                log.error("Error en elemento: ", e.getMessage(), e);
             }
         }
 
@@ -160,13 +166,13 @@ public class advancedSteps extends basicSteps {
         if (addedCountCart == quantityMaxProducts) {
             log.info("La cantidad de productos en el carrito corresponde a la cantidad de productos seleccionados");
             return true;
-        } else if (addedCountCart > quantityMaxProducts) {
+        } else /*if (addedCountCart > quantityMaxProducts)*/ {
             log.error("Hay más productos en el carrito de los seleccionados");
             return false;
-        } else {
+        }/* else {
             log.error("No se encuentran productos en el carrito");
             return false;
-        }
+        }*/
 
     }
 }

@@ -1,5 +1,6 @@
 #Validación lógica de decisión automatizada
 
+@PruebaNivelUno
 Feature: Proceso de compras de productos en el catalogo 
   Como cliente de la tienda
   Quiero buscar productos por precio
@@ -11,4 +12,6 @@ Feature: Proceso de compras de productos en el catalogo
     And El usuario ha iniciado sesion
 
   Scenario: Seleccion de productos segun criterio
-    Given Selecciona el producto mas costoso 
+    When Selecciona el producto mas costoso
+    Then Valida en el carrito que el producto seleccionado es el correcto
+    And Valida que solo haya un producto seleccionado

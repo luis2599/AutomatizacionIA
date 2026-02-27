@@ -8,9 +8,9 @@ import org.openqa.selenium.TakesScreenshot;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
-import pages.pasosBasicos;
+import pages.basicSteps;
 
-public class hooks extends pasosBasicos {
+public class hooks extends basicSteps {
 
     public hooks() {
         super(driver);

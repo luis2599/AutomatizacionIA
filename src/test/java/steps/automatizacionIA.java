@@ -19,9 +19,15 @@ public class automatizacionIA {
         main.loginProcess();
     }
 
-    @Given("^(?:Selecciona el producto mas costoso|Selecciona el producto de mayor valor)$")
+    @When("^(?:Selecciona el producto mas costoso|Selecciona el producto de mayor valor)$")
     public void seleccionProducto(){
+        main.productSearch();
+    }
 
+    @Then("^(?:Valida en el carrito que el producto seleccionado es el correcto)$")
+    public void shoppingCart(){
+        soft.assertTrue(main.productsCart(), "El nombre del producto del carrito no coincide con el seleccionado");
+        soft.assertAll();
     }
     
 }

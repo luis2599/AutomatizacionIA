@@ -5,7 +5,7 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
-import pages.pasosBasicos;
+import pages.basicSteps;
 
 // Anotación para indicar que se utilizará Cucumber como runner de pruebas
 @RunWith(Cucumber.class)
@@ -22,6 +22,6 @@ public class testAutomatizacionIA {
     //Metodo que se ejecutará después de todas las pruebas para cerrar el navegador
     @AfterClass
     public static void tearDown() {
-        pasosBasicos.closeBrowser();
+        basicSteps.closeBrowser();
     }
 }

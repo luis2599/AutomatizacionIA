@@ -27,12 +27,12 @@ import org.slf4j.LoggerFactory;
 //importación de la clase WebDriverManager para gestionar las dependencias del controlador del navegador.
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class pasosBasicos {
+public class basicSteps {
 
     // Declaración de la variable estática 'driver' para el WebDriver y una
     // instancia de WebDriverWait con un tiempo de espera de 5 segundos.
     protected static WebDriver driver;
-    public static final Logger log = LoggerFactory.getLogger(pasosBasicos.class);
+    public static final Logger log = LoggerFactory.getLogger(basicSteps.class);
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     // Caché de elementos: mapea localizadores (By) a WebElement para reutilizar elementos encontrados y evitar búsquedas repetidas
     Map<By, WebElement> elementCache = new HashMap<>(); 
@@ -62,8 +62,8 @@ public class pasosBasicos {
     }
 
     // Inicializa la variable estática 'driver' con una instancia de ChromeDriver
-    public pasosBasicos(WebDriver driver) {
-        pasosBasicos.driver = driver;
+    public basicSteps(WebDriver driver) {
+        basicSteps.driver = driver;
     }
 
     // metodo para dar navegar a un sitio web
@@ -182,13 +182,21 @@ public class pasosBasicos {
         return texto;
     }
 
+    //Metodo para convertir un String en un valor double
+    public double convertirStringADouble(String valor){
+        // Elimina todo excepto dígitos y punto
+        String conversion = valor.replaceAll("[^\\d.]", "");
+        double doble = Double.parseDouble(conversion);
+        return doble;
+    }
+
     // metodo para tomar un objeto de la pagina y transformala en numero, con
     // impresion del numero obtenido
     public Integer obtenerNumero(By locator) {
         String texto = driver.findElement(locator).getText();
         String numeroTexto = texto.replaceAll("\\D+", ""); // Elimina todo excepto los dígitos
         Integer numero = Integer.parseInt(numeroTexto); // Convierte el texto a un número entero
-        //logger.info("Número obtenido: " + numero);
+        log.info("Número obtenido: " + numero);
         return numero;
     }
 

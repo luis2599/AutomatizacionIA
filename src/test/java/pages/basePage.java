@@ -6,19 +6,19 @@ public class basePage extends basicSteps{
 
     advancedSteps adv = new advancedSteps();
 
-    //config
+    // Variables de configuración
     String url = config.get("url.base");
     int timeout = config.getInt("timeout.explicit");
     String user = config.get("user_standard");
     String pass = config.get("pass");
 
-    //locators
-    By user_login = locators.basePage.user_Input;
-    By pass_login = locators.basePage.pass_Input;
-    By button_login = locators.basePage.button_Login;
-    By container_products = locators.basePage.container_products;
-    By container_cart = locators.basePage.container_cart;
-    By button_cart = locators.basePage.button_cart;
+    // Elementos locators
+    By userLogin = locators.basePage.userInput;
+    By passLogin = locators.basePage.passInput;
+    By buttonLogin = locators.basePage.buttonLogin;
+    By containerProducts = locators.basePage.containerProducts;
+    By containerCart = locators.basePage.containerCart;
+    By buttonCart = locators.basePage.buttonCart;
 
     public basePage(){
         super(driver);
@@ -30,20 +30,28 @@ public class basePage extends basicSteps{
     }
 
     public void loginProcess(){
-        escribirTexto(user_login, user);
-        escribirTexto(pass_login, pass);
-        click(button_login);
+        escribirTexto(userLogin, user);
+        escribirTexto(passLogin, pass);
+        click(buttonLogin);
         esperarCargaCompletaPagina(timeout);
     }
 
     public void productSearch(){
-        adv.selectProduct(container_products);
+        adv.sampling(containerProducts);
+        adv.productPresentation();
+        adv.higherPrice();
+        adv.selectProduct();
+    }
+
+    public boolean numbersProducts(){
+        click(buttonCart);
+        esperarCargaCompletaPagina(timeout);
+        adv.cartSampling(containerCart);
+        return adv.numberProductsCart();
     }
 
     public boolean productsCart(){
-        click(button_cart);
-        esperarCargaCompletaPagina(timeout);
-        return adv.shoppingCartComparison(container_cart);
+        return adv.shoppingCartComparison();
     }
     
 }

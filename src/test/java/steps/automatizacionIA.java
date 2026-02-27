@@ -24,8 +24,14 @@ public class automatizacionIA {
         main.productSearch();
     }
 
+    @Then("^(?:Valida que solo haya un producto seleccionado en el carrito)$")
+    public void cantidadProductos(){
+        soft.assertTrue(main.numbersProducts(), "La cantidad de productos no coincide con la cantidad seleccionada");
+        soft.assertAll();
+    }
+
     @Then("^(?:Valida en el carrito que el producto seleccionado es el correcto)$")
-    public void shoppingCart(){
+    public void carritoCompras(){
         soft.assertTrue(main.productsCart(), "El nombre del producto del carrito no coincide con el seleccionado");
         soft.assertAll();
     }

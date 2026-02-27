@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Cucumber" time="7.395" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-02-27T00:16:07.799841700Z">
-<testcase classname="Proceso de compras de productos en el catalogo" name="Seleccion de productos segun criterio" time="7.113">
+<testsuite name="Cucumber" time="6.693" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-02-27T18:19:37.389435800Z">
+<testcase classname="Proceso de compras de productos en el catalogo" name="Seleccion de productos segun criterio" time="6.498">
 <system-out><![CDATA[
 Given El usuario abre el navegador y navega al sitio web....................passed
 And El usuario ha iniciado sesion...........................................passed
 When Selecciona el producto mas costoso.....................................passed
-Then Valida en el carrito que el producto seleccionado es el correcto.......passed
+Then Valida que solo haya un producto seleccionado en el carrito............passed
+And Valida en el carrito que el producto seleccionado es el correcto........passed
 ]]></system-out>
 </testcase>
 </testsuite>

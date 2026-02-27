@@ -71,8 +71,7 @@ public class basicSteps {
         driver.get(url);
     }
 
-    // metodo para esperar un tiempo determinado (en segundos) utilizando
-    // Thread.sleep, con manejo de excepciones.
+    // metodo para esperar un tiempo determinado (en segundos) utilizando Thread.sleep, con manejo de excepciones.
     public static void esperar(int segundos) {
         try {
             Thread.sleep(segundos * 1000);
